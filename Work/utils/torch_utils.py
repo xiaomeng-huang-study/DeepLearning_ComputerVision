@@ -67,8 +67,8 @@ def train(model: torch.nn.Module, epochs: int, optimizer: torch.optim.Optimizer,
         history["loss"].append(loss_tmp / len(train_loader))
         history["accuracy"].append(accuracy_tmp / len(train_loader))
 
-        writer.add_scalar('Loss/train', loss_tmp / len(train_loader), epoch)
-        writer.add_scalar('Accuracy/train', accuracy_tmp / len(train_loader), epoch)
+        writer.add_scalar('Loss/train', loss_tmp / len(train_loader), (epoch+1))
+        writer.add_scalar('Accuracy/train', accuracy_tmp / len(train_loader), (epoch+1))
 
         # evaluate model
         with tqdm.tqdm(enumerate(val_loader), total=len(val_loader)) as bar:
@@ -103,8 +103,8 @@ def train(model: torch.nn.Module, epochs: int, optimizer: torch.optim.Optimizer,
                         bar.set_postfix({"loss": history["loss"][-1], "accuracy": history["accuracy"][-1], 
                                         "val_loss": history["val_loss"][-1], "val_accuracy": history["val_accuracy"][-1]})
         
-        writer.add_scalar('Loss/val', loss_tmp / len(val_loader), epoch)
-        writer.add_scalar('Accuracy/val', accuracy_tmp / len(val_loader), epoch)
+        writer.add_scalar('Loss/val', loss_tmp / len(val_loader), (epoch+1))
+        writer.add_scalar('Accuracy/val', accuracy_tmp / len(val_loader), (epoch+1))
         
         # update best accuracy
         best_accuracy = max(best_accuracy, history["val_accuracy"][-1])
